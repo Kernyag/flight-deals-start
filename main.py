@@ -2,14 +2,7 @@
 from flight_search import FlightSearch
 from data_manager import DataManager
 from pprint import pprint
-
-
-search_data = {
-    "fly_from": "BUD",
-    "fly_to": "LHR",
-    "date_from": "26/02/2024",
-    "date_to": "30/03/2024"
-}
+import json
 
 data_manager = DataManager()
 fligh_data = FlightSearch()
@@ -22,3 +15,11 @@ if len(sheet_data[0]["iataCode"]) == 0:
         element["iataCode"] = fligh_data.set_iata_code(element["city"])
     data_manager.dest_data = sheet_data
     data_manager.set_iata_codes_in_sheety()
+
+
+data = fligh_data.serch_for_flights("PAR")
+
+
+
+"""with open("flight_data.json", mode="w") as file:
+    json.dump(data, file)"""
