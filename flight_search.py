@@ -14,7 +14,7 @@ HEADER = {
 
 class FlightSearch:
     #This class is responsible for talking to the Flight Search API.
-    def set_iata_code(self, city_name):
+    def get_iata_code(self, city_name):
         parameters = {
             "term": city_name,
             "location_types": "city",
