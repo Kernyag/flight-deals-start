@@ -1,14 +1,21 @@
 #This file will need to use the DataManager,FlightSearch, FlightData, NotificationManager classes to achieve the program requirements.
 from flight_search import FlightSearch
 from data_manager import DataManager
+from notification_manager import NotificationManager
+from dotenv import load_dotenv
+import os
 from pprint import pprint
 import json
+
+load_dotenv()
+
+EMAIL_PASSW = os.getenv("EMAIL_PASSW")
 
 data_manager = DataManager()
 fligh_data = FlightSearch()
 
 sheet_data = data_manager.get_data_from_sheet()
-#pprint(sheet_data)
+
 
 if len(sheet_data[0]["iataCode"]) == 0:
     for element in sheet_data:
@@ -23,7 +30,13 @@ for element in sheet_data:
 
 for i in range(len(sheet_data)):
     if search_result[i]["price"] != None and (search_result[i]["price"] < sheet_data[i]["lowestPrice"]):
-        print(True)
+        message = f"""
+        Budapest - BUD to {sheet_data[i]["city"]} - {sheet_data[i]["iataCode"]}
+        Price: {search_result[i]["price"]} HUF 
+        from {search_result[i]["departure"]} for {search_result[i]["nights"]} nights.
+        """
+        notification = NotificationManager(from_email="gyorkerny@gmail.com", from_passw=EMAIL_PASSW, to_email="kernyag@hotmail.com", send_message=message)
+        notification.send_notification()
 
 
 """with open("flight_data.json", mode="w") as file:

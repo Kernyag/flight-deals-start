@@ -16,6 +16,6 @@ class NotificationManager:
         connection.sendmail(
             from_addr=self.from_email,
             to_addrs=self.to_email,
-            msg=f"Subject: Weather\n\n{self.msg}"
+            msg=f"Subject: Flight deal\n\n{self.msg}"
         )
         connection.close()
